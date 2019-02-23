@@ -21,39 +21,39 @@ import Foundation
  */
 public class Operation: Foundation.Operation, HTTPRequestOperation
 {
-    
+
     /**
      A enum of errors which could be returned.
      */
-    enum Error: Swift.Error {
+    public enum Error: Swift.Error {
         /**
          Validation of operation settings failed.
          */
         case validationFailed
-        
+
         /**
          The JSON format wasn't what we expected.
          */
         case unexpectedJSONFormat(statusCode: Int, response: String?)
-        
+
         /**
          An unexpected HTTP status code (e.g. 4xx or 5xx) was received.
          */
         case http(statusCode: Int, response: String?)
     };
-    
+
     private let couchOperation: CouchOperation
-    
+
     /**
      Initalises an Operation for executing.
-     
+
      - parameter couchOperation: The `CouchOperation` to execute.
      */
     public init(couchOperation: CouchOperation) {
         self.couchOperation = couchOperation
     }
-    
-    
+
+
     // NS operation property overrides
     private var mExecuting: Bool = false
     override public var isExecuting: Bool {
@@ -113,7 +113,7 @@ public class Operation: Foundation.Operation, HTTPRequestOperation
     internal var queryItems: [URLQueryItem] {
         get {
             var items:[URLQueryItem] = []
-            
+
             for (key, value) in couchOperation.parameters {
                 items.append(URLQueryItem(name: key, value: value))
             }
